@@ -1,6 +1,6 @@
 let userDetails = [] ;
 
-const urlLink = 'https://crudcrud.com/api/ca0f93a66c384ee58413f0d638afd045/appointmentDatas'
+const urlLink = 'https://crudcrud.com/api/ca0f93a66c384ee58413f0d638afd045/appointmentDatas/'
 
  // Retrieve existing user details from local storage
 //  let userDetails = JSON.parse(localStorage.getItem('userDetails')) || [];
@@ -36,15 +36,24 @@ const urlLink = 'https://crudcrud.com/api/ca0f93a66c384ee58413f0d638afd045/appoi
  }
 
  // Update local storage with the updated user details array
- function updateLocalStorage() {
-     localStorage.setItem('userDetails', JSON.stringify(userDetails));
- }
+//  function updateLocalStorage() {
+//      localStorage.setItem('userDetails',  .stringify(userDetails));
+//  }
 
  // Delete a user from the user details array and update the UI
  function deleteUser(index) {
+
+    const deleteId = userDetails[index];
+
+    axios.delete(urlLink + deleteId._id )
+    .then( (response) => {
+             console.log(response);
+    })
+    .catch( err => console.log(err));
+
      userDetails.splice(index, 1);
-     updateLocalStorage();
      displayUserDetails();
+    
  }
 
  // Edit a user's details and update the UI
@@ -101,8 +110,8 @@ const urlLink = 'https://crudcrud.com/api/ca0f93a66c384ee58413f0d638afd045/appoi
      
 
 
-     // Store the updated array of user details in the local storage
-     updateLocalStorage();
+    // Store the updated array of user details in the local storage
+    //updateLocalStorage();
 
      // Display a success message or perform any desired actions
      console.log("User details stored successfully:", newUser);
@@ -130,14 +139,18 @@ window.addEventListener("DOMContentLoaded", () => {
          for( var i = 0; i< response.data.length; i++){        
              userDetails.push(response.data[i])
              displayUserDetails()
+            
+
         
+         }
+        //  console.log(userDetails[0])
+        //  console.log(userDetails[1]._id)
         
-         }}
+        }
        })
     .catch((err) => {
         console.log(err)
     })
-
 
    
 
