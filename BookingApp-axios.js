@@ -1,19 +1,20 @@
+let userDetails = [] ;
 
+const urlLink = 'https://crudcrud.com/api/ca0f93a66c384ee58413f0d638afd045/appointmentDatas'
 
  // Retrieve existing user details from local storage
 //  let userDetails = JSON.parse(localStorage.getItem('userDetails')) || [];
 
- let userDetails = [] ;
 
  // Display user details in the UI
- function displayUserDetails(  ) {
+ function displayUserDetails( ) {
      const userList = document.getElementById('userList');
      userList.innerHTML = '';
 
      userDetails.forEach((user, index) => {
          const userDiv = document.createElement('div');
          userDiv.className = 'mb-3';
-
+         
          const userInfo = document.createElement('p');
          userInfo.innerText = `Name: ${user.name}, Email: ${user.email}, Phone: ${user.phone}, Call Time: ${user.callDate} ${user.callTime}`;
 
@@ -65,7 +66,7 @@
      }
  }
 
- // Display data on Console and Store in Local Storage
+ // Display data on Console and Store in CRUD CRUD
  function getACall(event) {
      event.preventDefault(); // Prevent the form from refreshing the page
 
@@ -77,12 +78,12 @@
          callDate: event.target.callDate.value,
          callTime: event.target.callTime.value
      };
-     const urlLink = 'https://crudcrud.com/api/331fc9143c104d1da5ab3352b5a7650d/appointmentDatas'
+     
      axios.post( urlLink, newUser ).then((response) => {
         console.log( response )
         // displayUserDetails ( response.data )
-        userDetails.push(response.data)
-        displayUserDetails (  )
+        userDetails.push( response.data)
+        displayUserDetails()
       } ).catch( err => {
         console.log(err);
         alert("Something Went Wrong");
@@ -117,3 +118,27 @@
 
  // Initial display of user details
 //  displayUserDetails();
+
+window.addEventListener("DOMContentLoaded", () => {
+
+    axios.get(urlLink)
+    .then( (response) =>{
+         console.log(response)
+
+         if( response.data.length > 0 ){
+
+         for( var i = 0; i< response.data.length; i++){        
+             userDetails.push(response.data[i])
+             displayUserDetails()
+        
+        
+         }}
+       })
+    .catch((err) => {
+        console.log(err)
+    })
+
+
+   
+
+})
