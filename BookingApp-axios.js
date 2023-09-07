@@ -1,4 +1,5 @@
 let userDetails = [] ;
+let updateId ;
 
 const urlLink = 'https://crudcrud.com/api/ca0f93a66c384ee58413f0d638afd045/appointmentDatas/'
 
@@ -35,10 +36,7 @@ const urlLink = 'https://crudcrud.com/api/ca0f93a66c384ee58413f0d638afd045/appoi
      });
  }
 
- // Update local storage with the updated user details array
-//  function updateLocalStorage() {
-//      localStorage.setItem('userDetails',  .stringify(userDetails));
-//  }
+
 
  // Delete a user from the user details array and update the UI
  function deleteUser(index) {
@@ -58,27 +56,57 @@ const urlLink = 'https://crudcrud.com/api/ca0f93a66c384ee58413f0d638afd045/appoi
 
  // Edit a user's details and update the UI
  function editUser(index) {
-     const user = userDetails[index];
-     const newName = prompt('Enter the new name:', user.name);
-     const newEmail = prompt('Enter the new email:', user.email);
-     const newPhone = prompt('Enter the new phone number:', user.phone);
 
-     if (newName && newEmail && newPhone) {
-         user.name = newName;
-         user.email = newEmail;
-         user.phone = newPhone;
+    const userToEdit = userDetails[index];
+    updateId = userDetails[index];
 
-         updateLocalStorage();
-         displayUserDetails();
-     } else {
-         alert('Invalid input! Please try again.');
-     }
+  document.getElementById('fname').value = userToEdit.name;
+  document.getElementById('email').value = userToEdit.email;
+  document.getElementById('pNumber').value = userToEdit.phone;
+  document.getElementById('callDate').value = userToEdit.callDate;
+  document.getElementById('callTime').value = userToEdit.callTime;
+
+  document.getElementById('editIndex').value = index;
+    
  }
 
  // Display data on Console and Store in CRUD CRUD
  function getACall(event) {
      event.preventDefault(); // Prevent the form from refreshing the page
 
+     const editIndex = parseInt(document.getElementById('editIndex').value);
+
+     if (editIndex !== -1) {
+       // Editing an existing user
+
+        
+       const updatedUser = {
+         name: event.target.fname.value,
+         email: event.target.email.value,
+         phone: event.target.pNumber.value,
+         callDate: event.target.callDate.value,
+         callTime: event.target.callTime.value
+       };
+       
+
+       axios.put(urlLink + updateId._id , updatedUser ).
+       then( response => {
+            console.log(response);
+
+       })
+       .catch( err => {
+        console.log(err);
+
+       })
+       // Update the user details in userDetails array
+       userDetails[editIndex] = updatedUser;
+       displayUserDetails()
+
+       
+   
+       // Clear the edit index
+       document.getElementById('editIndex').value = -1;
+     } else {
      // Create a new user object with the details entered by the user
      const newUser = {
          name: event.target.fname.value,
@@ -100,22 +128,10 @@ const urlLink = 'https://crudcrud.com/api/ca0f93a66c384ee58413f0d638afd045/appoi
     }
         );
 
-      
-
-     // Push the new user object into the array of existing user details
-     //userDetails.push(newUser);
-    // userDetails.push ( response.data)
-
-     
-     
 
 
-    // Store the updated array of user details in the local storage
-    //updateLocalStorage();
-
-     // Display a success message or perform any desired actions
      console.log("User details stored successfully:", newUser);
-
+     }
      // Clear the form inputs
      event.target.fname.value = '';
      event.target.email.value = '';
