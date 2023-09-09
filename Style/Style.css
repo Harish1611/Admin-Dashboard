@@ -1,0 +1,68 @@
+body {
+    background-image: url('../assets/background.jpg');
+    background-size: cover;
+    font-family: 'Josefin Sans';
+    font-size: 22px;
+}
+
+h2 {
+    text-align: left;
+    color: purple;
+}
+
+p {
+    text-align: left;
+    color: gray;
+    font-size: 20px;
+}
+
+label {
+    color: purple;
+    font-size: 20px;
+    line-height: 40px;
+}
+
+.sb-btn {
+    background-color: purple;
+    color: white;
+}
+
+/* .borderclr {
+    border: 4px solid purple;
+    background-color: rgba(255, 255, 255, 0.563);
+} */
+
+.headers {
+
+    padding-left: 20px;
+    background-color: black;
+    color: black;
+}
+
+.headersh2 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: start;
+    margin-bottom: -5px;
+
+}
+
+input {
+
+    display: flex;
+}
+
+.something {
+    padding-top: 40px;
+}
+
+.displayArea h3 {
+
+    color: purple;
+    font-size: 18px;
+}
+
+.sbbtn-cs {
+    padding-top: 40px;
+    /* margin-top: 20px !important; */
+}
